@@ -1,0 +1,12 @@
+{
+  "name": "todo-extension",
+  "version": "1.0.0",
+  "description": "Example TODO list extension for Waiveo",
+  "type": "module",
+  "main": "server/index.js",
+  "keywords": ["extension", "todo", "example"],
+  "author": "Waiveo Team",
+  "license": "MIT"
+}
+
+
