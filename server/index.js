@@ -70,15 +70,15 @@ export default async function init(api) {
     this.log(`Executing TODO action: ${actionKey}`);
     
     switch (actionKey) {
-      case 'create-todo':
+      case 'create_todo':
         return await createTodo(params, triggerData, this);
-      case 'complete-todo':
+      case 'complete_todo':
         return await completeTodo(params, triggerData, this);
-      case 'delete-old-todos':
+      case 'delete_old_todos':
         return await deleteOldTodos(params, triggerData, this);
-      case 'update-todo-priority':
+      case 'update_todo_priority':
         return await updateTodoPriority(params, triggerData, this);
-      case 'send-todo-report':
+      case 'send_todo_report':
         return await sendTodoReport(params, triggerData, this);
       default:
         throw new Error(`Unknown action: ${actionKey}`);

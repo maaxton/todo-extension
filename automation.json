@@ -32,7 +32,7 @@
       "label": "Complete a todo",
       "description": "Mark a pending todo as complete",
       "fields": [
-        {"key": "todo_id", "type": "select", "label": "Todo", "required": true, "source": "/api/extensions/todo-extension/todos?status=pending"}
+        {"key": "todo_id", "type": "select", "label": "Todo", "required": true, "source": "/api/extensions/todo-extension/automation/todos/pending"}
       ]
     }
   ]
