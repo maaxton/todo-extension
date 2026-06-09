@@ -1,6 +1,15 @@
 # TODO Extension v1.1.0
 
-A simple TODO list extension that demonstrates extension development for Welcome Relay with full automation support.
+> **NOTE: This is an SDK v1 mirror.**
+>
+> This repository contains the SDK v1 version of the TODO extension. The canonical, actively maintained version is at `waiveo/extensions/todo/` and uses the SDK v2 API (`ctx.*`). The two codebases have different initialization patterns and database access approaches.
+>
+> - **Canonical (SDK v2, maintained):** `waiveo/extensions/todo/`
+> - **This mirror (SDK v1, legacy):** uses `api.*` and the older extension pattern
+>
+> Do not submit PRs to this mirror expecting them to be applied to the canonical. File issues against the canonical instead.
+
+A simple TODO list extension that demonstrates extension development for Waiveo with full automation support.
 
 ## Features
 

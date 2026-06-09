@@ -5,7 +5,7 @@
 
 export async function onInstall(api) {
   api.log('Installing TODO extension...');
-  
+
   // Register model with schema
   await api.registerModel('todos', {
     tableName: 'todo_items',
@@ -16,6 +16,8 @@ export async function onInstall(api) {
       title: { type: 'string', required: true, maxLength: 255 },
       description: { type: 'text' },
       completed: { type: 'boolean', default: false },
+      priority: { type: 'string' },
+      due_date: { type: 'string' },
       created_at: { type: 'datetime', default: 'CURRENT_TIMESTAMP' },
       updated_at: { type: 'datetime', default: 'CURRENT_TIMESTAMP' }
     },
@@ -23,7 +25,8 @@ export async function onInstall(api) {
     jsonFields: [],
     indexes: [
       { fields: ['completed'], name: 'idx_todo_items_completed' },
-      { fields: ['created_at'], name: 'idx_todo_items_created_at' }
+      { fields: ['created_at'], name: 'idx_todo_items_created_at' },
+      { fields: ['due_date'], name: 'idx_todo_items_due_date' }
     ]
   });
 
@@ -48,6 +51,8 @@ export default async function init(api) {
         title: { type: 'string', required: true, maxLength: 255 },
         description: { type: 'text' },
         completed: { type: 'boolean', default: false },
+        priority: { type: 'string' },
+        due_date: { type: 'string' },
         created_at: { type: 'datetime', default: 'CURRENT_TIMESTAMP' },
         updated_at: { type: 'datetime', default: 'CURRENT_TIMESTAMP' }
       },
@@ -55,7 +60,8 @@ export default async function init(api) {
       jsonFields: [],
       indexes: [
         { fields: ['completed'], name: 'idx_todo_items_completed' },
-        { fields: ['created_at'], name: 'idx_todo_items_created_at' }
+        { fields: ['created_at'], name: 'idx_todo_items_created_at' },
+        { fields: ['due_date'], name: 'idx_todo_items_due_date' }
       ]
     });
   } catch (error) {
@@ -345,7 +351,9 @@ export async function createTodo(params, triggerData, api) {
     const todo = await api.model('todos').create({
       title,
       description: description || '',
-      completed: false
+      completed: false,
+      priority: priority || null,
+      due_date: dueDate || null
     });
     
     // Emit event for other automations
@@ -472,19 +480,14 @@ export async function updateTodoPriority(params, triggerData, api) {
   }
   
   try {
-    // For now, we'll store priority in the description field as JSON metadata
-    // In a real implementation, you'd add a priority column to the database
     const todo = await api.model('todos').findById(todoId);
     
     if (!todo) {
       throw new Error(`Todo ${todoId} not found`);
     }
     
-    // Add priority metadata to description
-    const updatedDesc = `[Priority: ${priority}] ${todo.description || ''}`;
-    
     await api.model('todos').update(todoId, {
-      description: updatedDesc,
+      priority,
       updated_at: new Date()
     });
     
@@ -543,16 +546,15 @@ export async function sendTodoReport(params, triggerData, api) {
       report.overdueTodos = overdue;
       report.overdueCount = overdue.length;
     } else if (reportType === 'upcoming') {
-      // Get uncompleted todos from the last 7 days
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - 7);
-      
+      // Get uncompleted todos with a future due_date
+      const now = new Date().toISOString();
+
       const upcoming = await api.model('todos')
         .query()
         .where('completed', '=', 0)
-        .where('created_at', '>', cutoffDate)
+        .where('due_date', '>', now)
         .get();
-        
+
       report.upcomingTodos = upcoming;
       report.upcomingCount = upcoming.length;
     }

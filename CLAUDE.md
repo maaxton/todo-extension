@@ -41,15 +41,15 @@ All under `/api/extensions/todo-extension/`:
 
 **Triggers:** `todo_created`, `todo_completed`, `todo_overdue`
 
-**Actions (5):** `create-todo`, `complete-todo`, `delete-old-todos`, `update-todo-priority`, `send-todo-report`
+**Actions (5):** `create_todo`, `complete_todo`, `delete_old_todos`, `update_todo_priority`, `send_todo_report`
 
 **Events emitted:** `todo-created`, `todo-completed` (via `api.emit()`)
 
 ## Database
 
-**Model: `todo_items`** — `id`, `title`, `description`, `completed` (boolean), `created_at`, `updated_at`
+**Model: `todo_items`** — `id`, `title`, `description`, `completed` (boolean), `priority` (TEXT), `due_date` (TEXT, ISO 8601), `created_at`, `updated_at`
 
-**Indexes:** `idx_todo_items_completed`, `idx_todo_items_created_at`
+**Indexes:** `idx_todo_items_completed`, `idx_todo_items_created_at`, `idx_todo_items_due_date`
 
 ## Key Waiveo API Usage
 
