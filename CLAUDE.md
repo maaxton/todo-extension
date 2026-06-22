@@ -71,17 +71,3 @@ Uses Jewel Design system: `JewelPage`, `Card`, `Button`, `Badge`, `Modal`, `Empt
 cd /Users/matt/waiveo/waiveo
 ./scripts/cli/deploy-cli.sh extension todo-extension
 ```
-
-## Cross-Project Escalation
-
-If you encounter a problem outside this project's boundary:
-1. Write an issue file to `../issues/` following the workspace issue template (see workspace `CLAUDE.md` for format)
-2. Set `source-project` to `todo-extension`
-3. Set `assigned-project` if you know who owns it, otherwise `unassigned`
-4. Include specific acceptance criteria so the fixing agent can verify without a round-trip
-5. Always set severity — if `critical`, tell the user: "I've filed a critical cross-project issue — you may want to dispatch this from the workspace level."
-6. Note the dependency in your current work and continue
-
-## Check Assigned Issues
-
-Before starting work, scan `../issues/` for files where `assigned-project` is `todo-extension` and `status` is `assigned` or `in-progress`. Mention any open issues to the user before proceeding with other work.
