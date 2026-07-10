@@ -118,7 +118,7 @@
 
   async function deleteTodo() {
     if (!deletingTodoId) return;
-
+    
     const id = deletingTodoId;
     showDeleteModal = false;
     deletingTodoId = null;
@@ -130,19 +130,15 @@
 
       if (response.ok) {
         toasts.success('Task deleted successfully');
+        await loadTodos();
+        await loadStats();
       } else {
-        // The delete may have succeeded even if the response is not ok
-        // (e.g., the DB delete succeeded but a post-delete event emit failed).
-        // Always refresh the list to reflect the actual state.
-        toasts.success('Task deleted');
+        toasts.error('Failed to delete task');
       }
     } catch (error) {
       console.error('Error deleting todo:', error);
       toasts.error('Failed to delete task');
     }
-    // Always refresh the list — the delete may have succeeded regardless of response status
-    await loadTodos();
-    await loadStats();
   }
 </script>
 
@@ -178,9 +174,10 @@
       {#each todos as todo (todo.id)}
         <Card padding="lg" hover className="todo-card">
           <div class="todo-content">
-            <button 
+            <button
               class="todo-checkbox"
               class:checked={todo.completed}
+              aria-label={todo.completed ? 'Mark as pending' : 'Mark as done'}
               on:click={() => toggleTodo(todo)}
             >
               {#if todo.completed}
@@ -204,7 +201,7 @@
                 <Badge variant="warning" size="sm">Pending</Badge>
               {/if}
               <button class="delete-btn" aria-label="Delete task" on:click={() => confirmDeleteTodo(todo.id)}>
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>

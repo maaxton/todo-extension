@@ -1,0 +1,18 @@
+{
+  "name": "todo-extension",
+  "displayName": "Todo",
+  "description": "A simple shared todo list (example extension).",
+  "category": "Demo",
+  "recommended": false,
+  "hidden": false,
+  "uninstallable": true,
+  "provides": [
+    "task-management",
+    "todo-list"
+  ],
+  "requires": [],
+  "requiresImageDeps": [],
+  "minCoreVersion": "0.0.0",
+  "author": "Waiveo",
+  "license": "MIT"
+}

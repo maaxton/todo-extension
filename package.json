@@ -1,12 +1,14 @@
 {
   "name": "todo-extension",
-  "version": "1.0.0",
-  "description": "Example TODO list extension for Waiveo",
+  "version": "1.2.8",
   "type": "module",
-  "main": "server/index.js",
-  "keywords": ["extension", "todo", "example"],
+  "description": "TODO list extension for Waiveo",
+  "main": "index.js",
   "author": "Waiveo Team",
-  "license": "MIT"
+  "license": "MIT",
+  "waiveo": {
+    "displayName": "Todo",
+    "category": "Demo",
+    "description": "A simple shared todo list (example extension)."
+  }
 }
-
-
